@@ -1,0 +1,30 @@
+spring:
+  jackson:
+    time-zone: Europe/Paris
+  datasource:
+    url: jdbc:mysql://localhost:3306/txlforma?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: formeo
+    password: formeo_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret: "CHANGE-ME-super-secret-key-please-change-1234567890"
+    expirationMinutes: 120
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.formeo.formeo: DEBUG
+
+frontend:
+  base-url: "http://localhost:5173"
