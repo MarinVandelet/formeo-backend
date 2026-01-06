@@ -27,7 +27,7 @@ logging:
     com.formeo.formeo: DEBUG
 
 frontend:
-  base-url: "http://localhost:5173"
+  base-url: ${FRONTEND_BASE_URL}
 
 stripe:
   secret-key: ${STRIPE_SECRET_KEY}
