@@ -34,7 +34,7 @@ public class EvaluationService {
         Utilisateur user = utilisateurRepository.findById(utilisateurId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
 
-        // ADMIN peut tout voir
+        // admin voit tout
         if (user.getRole() == Role.ADMIN) {
             return true;
         }
@@ -65,7 +65,7 @@ public class EvaluationService {
         Utilisateur eleve = utilisateurRepository.findById(utilisateurId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
 
-        // Vérifier que l'élève est inscrit et PAYE
+        // Verif que l'eleve rentre dans les conditions
         boolean payee = inscriptionRepository.existsByUtilisateurIdAndSessionIdAndStatut(
                 utilisateurId, sessionId, StatutInscription.PAYEE
         );
@@ -74,7 +74,7 @@ public class EvaluationService {
                     "L'utilisateur n'est pas inscrit et payé pour cette session");
         }
 
-        // Vérifier qu'il a émargé (présent)
+        // Vérifier qu'il a émargé
         boolean present = emargementRepository.existsByUtilisateurIdAndSessionId(utilisateurId, sessionId);
         if (!present) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
