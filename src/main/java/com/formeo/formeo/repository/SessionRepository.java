@@ -9,6 +9,5 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     List<Session> findByFormationId(Long formationId);
 
-    // ✅ Sessions dont la formation a cet intervenant
     List<Session> findByFormationIntervenantId(Long intervenantId);
 }
