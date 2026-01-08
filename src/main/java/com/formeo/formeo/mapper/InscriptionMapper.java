@@ -18,10 +18,8 @@ public final class InscriptionMapper {
         dto.setStatut(inscription.getStatut().name());
         dto.setCreeLe(inscription.getCreeLe());
 
-        // On laisse DtoMapper gérer tous les sous-DTO (Session, Formation, Categorie...)
         dto.setSession(DtoMapper.toDto(inscription.getSession()));
 
-        // Nouveaux champs pour les évaluations
         dto.setNote(inscription.getNote());
         dto.setDateEvaluation(inscription.getDateEvaluation());
 
