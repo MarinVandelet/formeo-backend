@@ -43,7 +43,6 @@ public class UtilisateurController {
     public Utilisateur modifier(@PathVariable Long id, @Valid @RequestBody Utilisateur body) {
         Utilisateur existing = get(id);
 
-        // email modifiable ou non ? ici on autorise, mais on protège l'unicité
         if (!existing.getEmail().equalsIgnoreCase(body.getEmail())) {
             utilisateurRepository.findByEmailIgnoreCase(body.getEmail()).ifPresent(u -> {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Email deja utilise");
