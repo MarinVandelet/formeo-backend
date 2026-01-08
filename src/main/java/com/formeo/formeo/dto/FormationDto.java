@@ -11,7 +11,6 @@ public class FormationDto {
 
     public CategorieDto categorie;
 
-    // ✅ NOUVEAU
     public Long intervenantId;
     public String intervenantNom;
     public String intervenantPrenom;
