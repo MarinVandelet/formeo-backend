@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Table(
         name = "inscription",
         uniqueConstraints = {
-                // Empêche le même utilisateur de s'inscrire 2 fois à la même session
                 @UniqueConstraint(
                         name = "uk_inscription_user_session",
                         columnNames = {"utilisateur_id", "session_id"}
@@ -38,15 +37,12 @@ public class Inscription {
     @Column(nullable = false)
     private LocalDateTime creeLe = LocalDateTime.now();
 
-    // ⭐ NOUVEAU : note finale (0–20)
     @Column(name = "note")
     private Double note;
 
-    // ⭐ NOUVEAU : date de l'évaluation
     @Column(name = "date_evaluation")
     private LocalDateTime dateEvaluation;
 
-    // ⭐ NOUVEAU : intervenant qui a évalué
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluateur_id")
     private Utilisateur evaluateur;
@@ -54,7 +50,6 @@ public class Inscription {
     public Inscription() {
     }
 
-    // --- getters / setters ---
 
     public Long getId() {
         return id;
