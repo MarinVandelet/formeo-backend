@@ -32,9 +32,7 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Long> 
 
     List<Inscription> findBySessionIdAndStatut(Long sessionId, StatutInscription statut);
 
-    // ✅ vérifier que l'utilisateur est bien PAYE sur la session
     boolean existsByUtilisateurIdAndSessionIdAndStatut(Long utilisateurId, Long sessionId, StatutInscription statut);
 
-    // ✅ NEW (optionnel) : compter toutes les inscriptions d'une session
     long countBySessionId(Long sessionId);
 }
