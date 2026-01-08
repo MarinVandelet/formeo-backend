@@ -31,7 +31,6 @@ public class EvaluationController {
         this.sessionRepository = sessionRepository;
     }
 
-    // DTO envoyé au front
     public static class EvaluationLine {
         public Long inscriptionId;
         public Long utilisateurId;
@@ -58,7 +57,6 @@ public class EvaluationController {
         }
     }
 
-    // DTO reçu du front
     public static class EvaluationUpdateRequest {
         @NotNull public Long inscriptionId;
         @NotNull public Double note;
