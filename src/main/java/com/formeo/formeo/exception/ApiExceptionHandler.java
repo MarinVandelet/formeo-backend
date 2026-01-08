@@ -41,7 +41,6 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleAny(Exception ex) {
-        // en prod on éviterait d’exposer ex.getMessage()
         Map<String, Object> b = body(500, "Internal server error");
         b.put("details", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(b);
