@@ -28,7 +28,7 @@ public class InscriptionController {
         this.inscriptionService = inscriptionService;
     }
 
-    // ADMIN : liste de toutes les inscriptions
+    // admin : liste de toutes les inscriptions
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<InscriptionDto> listAll() {
@@ -38,7 +38,7 @@ public class InscriptionController {
                 .toList();
     }
 
-    // UTILISATEUR : liste de ses inscriptions
+    // utilisateur : liste de ses inscriptions
     @GetMapping("/me")
     public List<InscriptionDto> listPourMoi(Authentication authentication) {
         Long userId = getUserId(authentication);
@@ -50,7 +50,7 @@ public class InscriptionController {
 
     public record CreerInscriptionRequest(@NotNull Long sessionId) {}
 
-    // UTILISATEUR : créer une inscription
+    // utilisateur : créer une inscription
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public InscriptionDto creer(Authentication authentication, @Valid @RequestBody CreerInscriptionRequest req) {
@@ -59,7 +59,7 @@ public class InscriptionController {
         return InscriptionMapper.toDto(inscription);
     }
 
-    // UTILISATEUR : annuler une de ses inscriptions
+    // utilisateur : annuler une de ses inscriptions
     @DeleteMapping("/{id}")
     public InscriptionDto annuler(Authentication authentication, @PathVariable Long id) {
         Long userId = getUserId(authentication);
@@ -67,7 +67,7 @@ public class InscriptionController {
         return InscriptionMapper.toDto(inscription);
     }
 
-    // UTILISATEUR ou ADMIN : payer une inscription
+    // utilisateur : payer une inscription
     @PostMapping("/{id}/payer")
     @ResponseStatus(HttpStatus.OK)
     public InscriptionDto payer(Authentication authentication, @PathVariable Long id) {
