@@ -32,7 +32,6 @@ public class Formation {
     @JoinColumn(name = "categorie_id", nullable = false)
     private Categorie categorie;
 
-    // ✅ NOUVEAU : intervenant (Utilisateur avec role = INTERVENANT)
     @ManyToOne
     @JoinColumn(name = "intervenant_id")
     private Utilisateur intervenant;
