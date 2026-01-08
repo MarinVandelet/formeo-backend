@@ -45,7 +45,7 @@ public class PaiementService {
         Inscription inscription = inscriptionRepository.findById(inscriptionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Inscription introuvable"));
 
-        // Seul le propriétaire ou un admin peut payer
+        // Seul le propriétaire peut payer
         boolean estAdmin = demandeur.getRole() == Role.ADMIN;
         boolean estProprietaire = inscription.getUtilisateur().getId().equals(demandeurId);
         if (!(estAdmin || estProprietaire)) {
@@ -99,10 +99,6 @@ public class PaiementService {
         }
     }
 
-    /**
-     * Marque une inscription comme PAYEE après retour Stripe.
-     * On garde la logique existante de sécurité.
-     */
     public Inscription marquerInscriptionPayee(Long demandeurId, Long inscriptionId) {
         Utilisateur demandeur = utilisateurRepository.findById(demandeurId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
