@@ -34,7 +34,7 @@ public class PaiementController {
         throw new IllegalStateException("Utilisateur non authentifie correctement");
     }
 
-    // 1) Création de la session Stripe Checkout
+    // Création de la session Stripe 
     @PostMapping("/checkout/{inscriptionId}")
     public Map<String, String> createCheckoutSession(Authentication authentication,
                                                      @PathVariable Long inscriptionId) {
@@ -53,7 +53,7 @@ public class PaiementController {
         return response;
     }
 
-    // 2) Confirmation du paiement (appelée par le front APRES retour Stripe)
+    // Confirmation du paiement
     @PostMapping("/confirm/{inscriptionId}")
     @ResponseStatus(HttpStatus.OK)
     public InscriptionDto confirmer(Authentication authentication,
