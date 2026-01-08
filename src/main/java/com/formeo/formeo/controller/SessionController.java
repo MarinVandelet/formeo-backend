@@ -52,7 +52,6 @@ public class SessionController {
         return sessions.stream().map(DtoMapper::toDto).toList();
     }
 
-    // PUBLIC
     @GetMapping("/{id}")
     public SessionDto get(@PathVariable Long id) {
         Session session = sessionRepository.findById(id)
@@ -60,7 +59,7 @@ public class SessionController {
         return DtoMapper.toDto(session);
     }
 
-    // 👨‍🏫 Intervenant / Admin : sessions dont il est intervenant
+    // Intervenant / Admin : sessions dont il est intervenant
     @GetMapping("/mes-sessions")
     @PreAuthorize("hasAnyRole('INTERVENANT','ADMIN')")
     public List<SessionDto> mesSessions(Authentication authentication) {
@@ -69,7 +68,6 @@ public class SessionController {
         return sessions.stream().map(DtoMapper::toDto).toList();
     }
 
-    // PLACES DISPONIBLES
     @GetMapping("/disponibles")
     public List<SessionDisponibleResponse> sessionsDisponibles() {
         return sessionRepository.findAll()
@@ -110,7 +108,7 @@ public class SessionController {
         }
     }
 
-    // ADMIN
+    // admin
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -132,7 +130,6 @@ public class SessionController {
         return DtoMapper.toDto(sessionRepository.save(session));
     }
 
-    // ADMIN
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public SessionDto modifier(@PathVariable Long id, @Valid @RequestBody Session body) {
@@ -160,7 +157,6 @@ public class SessionController {
         return DtoMapper.toDto(sessionRepository.save(existing));
     }
 
-    // ADMIN
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
