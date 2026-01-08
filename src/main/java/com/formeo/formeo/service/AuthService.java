@@ -46,7 +46,7 @@ public class AuthService {
         u.setEntreprise(req.entreprise);
         u.setAdressePostale(req.adressePostale);
 
-        u.setRole(Role.USER); // par defaut
+        u.setRole(Role.USER);
         return utilisateurRepository.save(u);
     }
 
