@@ -74,11 +74,6 @@ public class InscriptionService {
         return inscriptionRepository.save(inscription);
     }
 
-    /**
-     * Paiement d'une inscription :
-     * - un USER ne peut payer que sa propre inscription
-     * - un ADMIN peut payer n'importe laquelle
-     */
     public Inscription payerInscription(Long demandeurId, Long inscriptionId) {
         Utilisateur demandeur = utilisateurRepository.findById(demandeurId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
