@@ -37,7 +37,7 @@ public class Utilisateur {
     @JsonIgnore
     @NotBlank
     @Column(nullable = false, length = 255)
-    private String motDePasse; // hashé (BCrypt)
+    private String motDePasse;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -47,11 +47,10 @@ public class Utilisateur {
     private String telephone;
 
     @Column(length = 150)
-    private String entreprise; // optionnel ("le cas echeant") :contentReference[oaicite:1]{index=1}
+    private String entreprise;
 
     @Column(length = 500)
-    private String adressePostale; // simple (texte)
-
+    private String adressePostale;
     public Utilisateur() {}
 
     public Long getId() { return id; }
