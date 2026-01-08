@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(
         name = "emargement",
         uniqueConstraints = {
-                // ✅ Un seul émargement par utilisateur / session / jour
                 @UniqueConstraint(
                         name = "uk_emargement_user_session_jour",
                         columnNames = {"utilisateur_id", "session_id", "jour_cours"}
@@ -33,19 +32,15 @@ public class Emargement {
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
 
-    // Date/heure à laquelle l'élève a signé la feuille papier ou autre
     @Column(name = "date_heure_signature", nullable = false)
     private LocalDateTime dateHeureSignature = LocalDateTime.now();
 
-    // Date/heure à laquelle il a émargé numériquement
     @Column(name = "date_heure_emargement", nullable = false)
     private LocalDateTime dateHeureEmargement;
 
-    // Jour de cours (lundi–vendredi) pour lequel il émarge
     @Column(name = "jour_cours", nullable = false)
     private LocalDate jourCours;
 
-    // Signature numérique / token / base64
     @Lob
     @Column(name = "signature_base64", nullable = false, columnDefinition = "LONGTEXT")
     private String signatureBase64 = "";
@@ -53,7 +48,6 @@ public class Emargement {
     public Emargement() {
     }
 
-    // --------- getters / setters ---------
 
     public Long getId() {
         return id;
