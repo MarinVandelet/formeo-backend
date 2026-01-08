@@ -10,14 +10,12 @@ public class InscriptionDto {
 
     private SessionDto session;
 
-    // Champs pour l’évaluation
     private Double note;
     private LocalDateTime dateEvaluation;
 
     public InscriptionDto() {
     }
 
-    // --- getters / setters ---
 
     public Long getId() {
         return id;
