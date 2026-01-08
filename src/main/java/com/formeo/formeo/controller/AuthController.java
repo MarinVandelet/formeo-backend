@@ -33,7 +33,6 @@ public class AuthController {
         return authService.login(req);
     }
 
-    // ✅ DTO de réponse
     public static class MeResponse {
         public Long id;
         public String email;
@@ -46,7 +45,6 @@ public class AuthController {
         }
     }
 
-    // ✅ Authenticated user info
     @PreAuthorize("hasAnyRole('USER','ADMIN','INTERVENANT')")
     @GetMapping("/me")
     public MeResponse me(Authentication authentication) {
