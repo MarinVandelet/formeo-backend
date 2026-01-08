@@ -51,7 +51,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            // Token invalide -> on laisse passer, Spring répondra 401 si route protégée
         }
 
         filterChain.doFilter(request, response);
