@@ -22,7 +22,7 @@ public class CategorieController {
         this.categorieRepository = categorieRepository;
     }
 
-    // PUBLIC
+    // partie publique
     @GetMapping
     public List<CategorieDto> lister() {
         return categorieRepository.findAll()
@@ -31,7 +31,6 @@ public class CategorieController {
                 .toList();
     }
 
-    // PUBLIC
     @GetMapping("/{id}")
     public CategorieDto get(@PathVariable Long id) {
         Categorie categorie = categorieRepository.findById(id)
@@ -39,7 +38,7 @@ public class CategorieController {
         return DtoMapper.toDto(categorie);
     }
 
-    // ADMIN ONLY
+    // administrateurs
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -52,7 +51,6 @@ public class CategorieController {
         return DtoMapper.toDto(saved);
     }
 
-    // ADMIN ONLY
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public CategorieDto modifier(@PathVariable Long id, @Valid @RequestBody Categorie body) {
@@ -66,7 +64,6 @@ public class CategorieController {
         return DtoMapper.toDto(saved);
     }
 
-    // ADMIN ONLY
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
