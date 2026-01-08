@@ -34,9 +34,6 @@ public class EmargementService {
         this.inscriptionRepository = inscriptionRepository;
     }
 
-    /**
-     * L'élève pointe pour AUJOURD'HUI sur une session, avec signature.
-     */
     public Emargement emargerAujourdHui(Long utilisateurId, Long sessionId, String signatureBase64) {
 
         Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
@@ -45,7 +42,6 @@ public class EmargementService {
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session introuvable"));
 
-        // Vérifier inscription payée
         boolean payee = inscriptionRepository.existsByUtilisateurIdAndSessionIdAndStatut(
                 utilisateurId, sessionId, StatutInscription.PAYEE
         );
@@ -54,7 +50,6 @@ public class EmargementService {
                     "Vous devez avoir une inscription payée pour émarger cette session");
         }
 
-        // Signature obligatoire
         if (signatureBase64 == null || signatureBase64.isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "La signature est obligatoire pour émarger");
@@ -125,10 +120,6 @@ public class EmargementService {
         return emargementRepository.findBySessionId(sessionId);
     }
 
-    /**
-     * Feuille d'émargement d'une session pour un jour de cours donné.
-     * Retourne tous les inscrits (PAYEE) avec present / absent.
-     */
     public List<FeuilleEmargementLigneDto> feuillePourJour(Long demandeurId,
                                                            Long sessionId,
                                                            LocalDate jourCours) {
@@ -139,7 +130,6 @@ public class EmargementService {
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session introuvable"));
 
-        // droits : admin ou intervenant de la formation
         boolean estAdmin = demandeur.getRole() == Role.ADMIN;
 
         Utilisateur intervenant = null;
@@ -154,7 +144,6 @@ public class EmargementService {
                     "Vous n'êtes pas intervenant/admin sur cette session");
         }
 
-        // Vérifier que le jour est dans la période + jour de semaine
         if (session.getDateDebut() == null || session.getDateFin() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Dates de session non définies");
@@ -175,7 +164,6 @@ public class EmargementService {
                     "Ce jour est un week-end, pas un jour de cours");
         }
 
-        // Tous les inscrits PAYEE de la session
         List<Inscription> inscritsPayes =
                 inscriptionRepository.findBySessionIdAndStatut(sessionId, StatutInscription.PAYEE);
 
