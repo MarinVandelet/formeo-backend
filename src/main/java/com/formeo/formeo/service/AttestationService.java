@@ -33,9 +33,6 @@ public class AttestationService {
         this.emargementRepository = emargementRepository;
     }
 
-    /**
-     * Vérifie les droits, calcule le type d'attestation et génère le PDF.
-     */
     public byte[] genererAttestationPdf(Long demandeurId, Long sessionId, Long utilisateurId) {
 
         Utilisateur demandeur = utilisateurRepository.findById(demandeurId)
@@ -47,10 +44,6 @@ public class AttestationService {
         Utilisateur eleve = utilisateurRepository.findById(utilisateurId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
 
-        // 🔐 DROITS :
-        // - l'élève lui-même
-        // - l'intervenant de la formation
-        // - un admin
         Formation formation = session.getFormation();
         Utilisateur intervenant = formation.getIntervenant();
 
@@ -63,7 +56,6 @@ public class AttestationService {
                     "Vous n'êtes pas autorisé à générer cette attestation");
         }
 
-        // On ne génère qu'APRES la fin de la session
         if (session.getDateFin() != null && session.getDateFin().isAfter(LocalDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "La session n'est pas encore terminée");
@@ -73,7 +65,6 @@ public class AttestationService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "Aucune évaluation trouvée pour cet utilisateur sur cette session"));
 
-        // Vérifier que l'élève était présent (émargement)
         boolean present = emargementRepository.existsByUtilisateurIdAndSessionId(utilisateurId, sessionId);
         if (!present) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -160,7 +151,7 @@ public class AttestationService {
 
     private String formatDate(LocalDateTime dateTime) {
         if (dateTime == null) return "";
-        return dateTime.toLocalDate().toString(); // tu peux formatter plus joli si tu veux
+        return dateTime.toLocalDate().toString();
     }
 
     private String labelType(AttestationType type) {
