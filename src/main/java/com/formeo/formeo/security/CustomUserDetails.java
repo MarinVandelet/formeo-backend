@@ -22,7 +22,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Spring attend "ROLE_XXX"
         return List.of(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().name()));
     }
 
