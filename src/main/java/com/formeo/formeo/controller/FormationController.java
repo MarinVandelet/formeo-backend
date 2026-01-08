@@ -33,7 +33,7 @@ public class FormationController {
         this.utilisateurRepository = utilisateurRepository;
     }
 
-    // PUBLIC
+    // publique
     @GetMapping
     public List<FormationDto> lister(@RequestParam(required = false) Long categorieId) {
         List<Formation> formations = (categorieId != null)
@@ -45,7 +45,6 @@ public class FormationController {
                 .toList();
     }
 
-    // PUBLIC
     @GetMapping("/{id}")
     public FormationDto get(@PathVariable Long id) {
         Formation formation = formationRepository.findById(id)
@@ -53,7 +52,7 @@ public class FormationController {
         return DtoMapper.toDto(formation);
     }
 
-    // ADMIN ONLY
+    // admin
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -67,7 +66,7 @@ public class FormationController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categorie inexistante"));
         formation.setCategorie(categorie);
 
-        // ✅ NOUVEAU : intervenant optionnel
+        // intervenant
         Long intervenantId = formation.getIntervenant() != null ? formation.getIntervenant().getId() : null;
         if (intervenantId != null) {
             Utilisateur intervenant = utilisateurRepository.findById(intervenantId)
@@ -83,7 +82,7 @@ public class FormationController {
         return DtoMapper.toDto(saved);
     }
 
-    // ADMIN ONLY
+    // admin
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public FormationDto modifier(@PathVariable Long id, @Valid @RequestBody Formation body) {
@@ -120,7 +119,6 @@ public class FormationController {
         return DtoMapper.toDto(saved);
     }
 
-    // ADMIN ONLY
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
