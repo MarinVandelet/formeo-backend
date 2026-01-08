@@ -36,7 +36,7 @@ public class EmargementController {
 
     public record EmargementRequest(Long sessionId, String signatureBase64) {}
 
-    // 👨‍🎓 Élève : émarger aujourd'hui (avec signature)
+    // Élève : émarger aujourd'hui (avec signature)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EmargementDto emarger(Authentication authentication,
@@ -49,7 +49,7 @@ public class EmargementController {
         return EmargementMapper.toDto(e);
     }
 
-    // 👨‍🎓 Élève : ses émargements
+    // Élève : ses émargements
     @GetMapping("/me")
     public List<EmargementDto> mesEmargements(Authentication authentication) {
         Long userId = getUserId(authentication);
@@ -59,7 +59,7 @@ public class EmargementController {
                 .toList();
     }
 
-    // 👨‍🏫 Intervenant / 👑 Admin : feuille d'émargement pour un jour donné
+    //  Intervenant /  Admin : feuille d'émargement selection par jour
     @GetMapping("/session/{sessionId}/jour/{jour}")
     @PreAuthorize("hasAnyRole('INTERVENANT','ADMIN')")
     public List<FeuilleEmargementLigneDto> feuillePourJour(Authentication authentication,
@@ -68,7 +68,7 @@ public class EmargementController {
         Long demandeurId = getUserId(authentication);
         LocalDate date;
         try {
-            date = LocalDate.parse(jour); // format YYYY-MM-DD
+            date = LocalDate.parse(jour);
         } catch (DateTimeParseException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Format de date invalide (attendu: YYYY-MM-DD)");
@@ -76,7 +76,6 @@ public class EmargementController {
         return emargementService.feuillePourJour(demandeurId, sessionId, date);
     }
 
-    // (optionnel) liste brute de tous les émargements d'une session
     @GetMapping("/session/{sessionId}")
     @PreAuthorize("hasAnyRole('INTERVENANT','ADMIN')")
     public List<EmargementDto> emargementsPourSession(@PathVariable Long sessionId) {
