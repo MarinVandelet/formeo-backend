@@ -21,7 +21,7 @@ public class Session {
     private LocalDateTime dateFin;
 
     @Min(1)
-    @Max(12) // max 12 selon le sujet
+    @Max(12)
     @Column(nullable = false)
     private int capacite = 12;
 
